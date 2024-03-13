@@ -20,7 +20,7 @@ class problem2 {
         }
 
         for(int i = 0; i < A2.length; i++){
-            if(A2[i] == 1){
+            if(A2[i] >= 1){
                 System.out.println(i);
             }
         }
