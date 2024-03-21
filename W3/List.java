@@ -49,5 +49,4 @@ public interface List<T> {
     // return null if index is invalid
     public T get(int index);
 
-    public boolean detectLoop();
 }

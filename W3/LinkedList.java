@@ -1,9 +1,7 @@
 package W3;
 
-import org.w3c.dom.Node;
-
 public class LinkedList<T> implements List<T> {
-    static class Node<T> {
+    public static class Node<T> {
         T data;
         Node<T> next;
 
@@ -195,52 +193,30 @@ public class LinkedList<T> implements List<T> {
         return false;
     }
 
-    @Override
-    public boolean detectLoop(){
-        Node<T> slow = head;
-        Node<T> fast = head;
-        //slow go 1 step, fast go 2 step
-
-        while(slow != null && fast.next != null){
-            slow = slow.next;
-            fast = fast.next.next;
-
-            if(slow.data == fast.data){
-                //If the slow and fast catch each other --> there's a loop
-                fast = fast.next;
-                int count = 1;
-
-                while(fast.next != slow){
-                    fast = fast.next;
-                    count++;
-                    //This count to count the step of the loop
-                }
-
-                //position fast "count" steps before slow
-                //also use the two pointers technique
-                fast = slow = head;
-                Node<T> prev = null;
-
-                while(count > 0){
-                    prev = fast;
-                    fast = fast.next;
-                    count--;
-                    //advance fast and slow with the same speed
-                }
-                while(fast != slow){
-                    prev = fast; 
-                    fast = fast.next;
-                    slow = slow.next;
-                }
-
-                prev.next = null;
-            }
+    public boolean createLoop(int index, T newValue) {
+        Node<T> newNode = new Node<>(newValue);
+        pointer = head;
+        while (index > 0 && pointer != null) {
+            pointer = pointer.next;
+            index--;
         }
 
-        return false;
+        newNode.next = pointer;
+
+        while (pointer.next != null) {
+            pointer = pointer.next;
+        }
+
+        pointer.next = newNode;
+
+        return true;
     }
 
-    // public void removeLoop() {
-        
-    // }
+    public void showList() {
+        pointer = head;
+        while (pointer != null) {
+            System.out.print(pointer.data + " --> ");
+            pointer = pointer.next;
+        }
+    }
 }

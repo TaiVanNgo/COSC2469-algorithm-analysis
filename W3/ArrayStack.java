@@ -7,6 +7,7 @@ public class ArrayStack<T> {
     private static int CAPACITY = 100;
     private T[] items;
 
+    @SuppressWarnings("unchecked")
     public ArrayStack() {
         size = 0;
         items = (T[]) new Object[CAPACITY];

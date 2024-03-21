@@ -28,7 +28,7 @@ public class problem4 {
         for (int i = 0; i < input.length(); i++) {
             if (input.charAt(i) == '(' || input.charAt(i) == '[' || input.charAt(i) == '{') {
                 stack.push(input.charAt(i));
-            } else {
+            } else if (!stack.isEmpty()) {
                 char openChar = stack.peek();
                 if ((openChar == '(' && input.charAt(i) != ')') ||
                         (openChar == '{' && input.charAt(i) != '}') ||
@@ -37,6 +37,8 @@ public class problem4 {
                 }
 
                 stack.pop(); // remove the open racket
+            }else{
+                return false;
             }
         }
 
