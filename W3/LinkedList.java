@@ -2,8 +2,8 @@ package W3;
 
 public class LinkedList<T> implements List<T> {
     public static class Node<T> {
-        T data;
-        Node<T> next;
+        public T data;
+        public Node<T> next;
 
         public Node(T data) {
             this.data = data;
@@ -11,9 +11,9 @@ public class LinkedList<T> implements List<T> {
         }
     }
 
-    private int size;
+    public int size;
     private Node<T> pointer;
-    private Node<T> head;
+    public Node<T> head;
 
     public LinkedList() {
         size = 0;
@@ -208,6 +208,7 @@ public class LinkedList<T> implements List<T> {
         }
 
         pointer.next = newNode;
+        size ++;//increase the size of the array
 
         return true;
     }
@@ -218,5 +219,26 @@ public class LinkedList<T> implements List<T> {
             System.out.print(pointer.data + " --> ");
             pointer = pointer.next;
         }
+    }
+
+    public void showListUpToTwenty(){
+        int count = 0;
+        pointer = head;
+        while (pointer != null && count != 20) {
+            System.out.print(pointer.data + " --> ");
+            pointer = pointer.next;
+            count++;
+        }
+    }
+
+    public int getIndexBasedOnData(T data){
+        pointer = head;
+        int index = 0;
+        while(pointer.data != data){
+            pointer = pointer.next;
+            index++;
+        }
+
+        return index;
     }
 }
