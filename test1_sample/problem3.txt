@@ -1,0 +1,21 @@
+int minProduct(int[] A)
+    N = length(A)
+    minProduct = INFINITY
+    for i from 0 to (N - 2)
+        for j from (i + 1) to (N - 1)
+            if (A[i] * A[j] < minProduct)
+                minProduct = A[i] * A[j]
+    return minProduct
+
+
+The time complexity of this program is O(N^2), since it is nested loop, it runs 2 loop
+
+
+**THE BETTER ALGORITHM**
+
+I think the better algorithm is we sort the array first, and then the 2 first element
+is the minimum multiplication
+
+
+
+// 3 6 7 8 1

@@ -55,41 +55,29 @@ public class problem2_2nd {
             return true;
         }
 
-        public void removeNode(int index) {
-            // 1->2->3->4->1
-            index--;// since we use the beginning is 1. we minus 1 to essy, when we
-            // use the index of 3 it go to the node has the data of 3
-            Node pointer = head;
-            if (index == 0) {
-                // the tail point to the next of the head
-                tail.next = head.next;
-                head = head.next; // update the new head
-
-                size--;// update new size
-                return;
+        public boolean removeNode(Node remove_node) {
+            if (size == 0) {
+                return false;
             }
 
-            while (index != 1) {
-                pointer = pointer.next;
-                index--;
+            Node temp = head;// use this to move
+            while (temp.next != remove_node) {
+                temp = temp.next;
+            }
+            // at this time, we at the previous position of the Node that we want to remove
+            // ex: we want remove 3. we are currently at 2
+            if (remove_node == head) {
+                head = remove_node.next;
+                tail.next = head;
+            } else if (remove_node == tail) {
+                tail = temp;
+                temp.next = head;
+            } else {
+                temp.next = temp.next.next;
             }
 
-            if (pointer.next == tail) {
-                // if the next of pointer is the tail?
-                // we currently want to remove tail
-                tail = pointer;// update the new tail(the previous of the tail that we want to remove)
-                pointer.next = head;// update the next of the new tail
-
-                size--;// update new size
-                return;
-            }
-
-            // after the wihle loop, the pointer go to the position of the previous data
-            // that we wnat to remove
-            // if we want to remove 3, after the loop we currently the prev of 3 -> it is 2.
-            pointer.next = pointer.next.next;
-            size--;// update new size
-
+            size--;
+            return true;
         }
 
         public void displayNode() {
@@ -106,19 +94,33 @@ public class problem2_2nd {
 
     public static void main(String[] args) {
         CircularList circularList = new CircularList();
+        int n = 41;
+        int m = 3;
 
-        circularList.insertNode(1);
-        circularList.insertNode(2);
-        circularList.insertNode(3);
-        circularList.insertNode(4);
-        circularList.insertNode(5);
-        circularList.insertNode(6);
+        for (int i = 1; i <= n; i++) {
+            circularList.insertNode(i);
+        }
 
+        System.out.println("Current circular list:");
         circularList.displayNode();
-
-        circularList.removeNode(6);
         System.out.println();
-        circularList.displayNode();
+
+        // for example we have n = 10, m = 3, the 1st person kill 3rd person
+        Node pointer = circularList.head;
+        while (circularList.size != 1) {
+            for (int i = 0; i < m - 1; i++) {
+                pointer = pointer.next;
+            }
+            // after the loop, we are currently at the node that we want to remove
+            System.out.println("Kill at: " + pointer.data);
+            circularList.removeNode(pointer);
+            pointer = pointer.next;// after kill the current position, move to the next
+        }
+
+        System.out.println("Survivor: " + circularList.head.data);
+
+        // System.out.println(pointer.data);
+
     }
 
 }
