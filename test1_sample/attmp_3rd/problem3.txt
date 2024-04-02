@@ -1,0 +1,45 @@
+
+int minProduct(int[] A)
+    N = length(A)                               {1}
+    minProduct = INFINITY                       {1}
+    for i from 0 to (N - 2)                     {N}
+        for j from (i + 1) to (N - 1)           {sum(N - 1)}
+            if (A[i] * A[j] < minProduct)
+                minProduct = A[i] * A[j]
+    return minProduct
+
+
+
+The complexity of the program above is O(N^2) since it is nested loop
+
+
+MY BETTER PROGRAM
+I dived this case into 3 situation
+first if the array only contains posititve elements
+ex: 1 3 5 13 20 
+I simply use the 2 first element to find the min minProduct
+
+if the array contains only negative elements
+ex: -20 -13 -5 -3 -1
+I simply use the 2 first element to find the min minProduct
+
+if the array contains both negative and positive elements
+ex: -20 -13 -5 -3 -1 1 3 5 13 20 
+I use the first and the last element to gain smallest product
+
+
+my pseudo code
+
+
+int minProduct(int[] A)
+    // determine what type of array (negative, positive, both nega and pos)
+    int determine = A[0] * A[length - 1]
+
+    if(determine > 0){
+        //This case is all positive element or all negative element
+        return A[0] * A[1];
+    }else if(determine < 0){
+        return A[0] * A[length - 1]
+    }
+
+

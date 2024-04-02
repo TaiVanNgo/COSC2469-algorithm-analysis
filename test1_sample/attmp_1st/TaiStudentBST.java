@@ -1,4 +1,4 @@
-package test1_sample;
+package test1_sample.attmp_1st;
 
 public class TaiStudentBST {
 

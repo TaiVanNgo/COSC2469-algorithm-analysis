@@ -1,7 +1,4 @@
 package W4.p2;
-
-import org.w3c.dom.Node;
-
 import W4.BST;
 import W4.BinaryTreeNode;
 

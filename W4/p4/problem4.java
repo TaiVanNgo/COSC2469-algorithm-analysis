@@ -10,23 +10,29 @@ public class problem4 {
     public static void main(String[] args) {
         BST<Integer> tree = new BST<Integer>();
 
-        tree.add(7);
-        tree.add(3);
-        tree.add(1);
-        tree.add(5);
-        tree.add(4);
-        tree.add(6);
-        tree.add(11);
-        tree.add(9);
         tree.add(8);
-        tree.add(13);
+        tree.add(5);
+        tree.add(16);
+        tree.add(2);
+        tree.add(7);
         tree.add(12);
-        tree.add(14);
+        tree.add(18);
 
         System.out.println(findLargerEqualValue(tree, 2));
+        System.out.println(findLargerEqualValue(tree, 4));
+        System.out.println(findLargerEqualValue(tree, 5));
+        System.out.println(findLargerEqualValue(tree, 6));
         System.out.println(findLargerEqualValue(tree, 7));
+        System.out.println(findLargerEqualValue(tree, 8));
         System.out.println(findLargerEqualValue(tree, 10));
+        System.out.println(findLargerEqualValue(tree, 12));
         System.out.println(findLargerEqualValue(tree, 15));
+        System.out.println(findLargerEqualValue(tree, 16));
+        System.out.println(findLargerEqualValue(tree, 17));
+        System.out.println(findLargerEqualValue(tree, 18));
+        System.out.println(findLargerEqualValue(tree, 20));
+
+
 
     }
 

@@ -10,12 +10,3 @@ int minProduct(int[] A)
 
 The time complexity of this program is O(N^2), since it is nested loop, it runs 2 loop
 
-
-**THE BETTER ALGORITHM**
-
-I think the better algorithm is we sort the array first, and then the 2 first element
-is the minimum multiplication
-
-
-
-// 3 6 7 8 1
