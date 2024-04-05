@@ -1,0 +1,16 @@
+int intSquareRoot(int N )
+    distance = INFINITY                                 {1}
+    answer = 1                                          {1}
+    for i from 1 to N                                   {N}
+        if (abs(i*i -N) < distance)                     {N}
+            answer = i                                  {1}
+            distance = abs(i * i - N)                   {1}
+    return answer                                       {1}
+
+
+The complexity of the above program is 
+
+N + N --> this is O(N) 
+
+The better algorithm to solve this problem
+
