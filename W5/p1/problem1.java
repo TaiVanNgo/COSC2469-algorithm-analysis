@@ -40,32 +40,32 @@ public class problem1 {
     }
 
     public static void main(String[] args) {
-        int[] test = generate(10, 10);
+        int[] test = generate(20, 5);
         System.out.println("Before sorting");
         printArr(test);
         System.out.println("After sorting");
-        printArr(countingSort(test, 10));
+        printArr(countingSort(test, 5));
 
-        // Correctness test
-        int[] test2 = generate(10, 10);
-        System.out.println("Before sorting");
-        printArr(test);
-        System.out.println("After sorting");
-        printArr(countingSort(test, 10));
+        // // Correctness test
+        // int[] test2 = generate(10, 10);
+        // System.out.println("Before sorting");
+        // printArr(test);
+        // System.out.println("After sorting");
+        // printArr(countingSort(test, 10));
 
-        // Performance test
-        int size = 1000000;
-        int max = 1000000;
-        int[] test3 = generate(size, max);
-        long t1 = System.currentTimeMillis();
-        countingSort(test2, max);
-        long t2 = System.currentTimeMillis();
-        System.out.println("Distribution sort: " + (t2 - t1) + " milliseconds");
+        // // Performance test
+        // int size = 1000000;
+        // int max = 1000000;
+        // int[] test3 = generate(size, max);
+        // long t1 = System.currentTimeMillis();
+        // countingSort(test2, max);
+        // long t2 = System.currentTimeMillis();
+        // System.out.println("Distribution sort: " + (t2 - t1) + " milliseconds");
 
-        long t3 = System.currentTimeMillis();
-        java.util.Arrays.sort(test2);
-        long t4 = System.currentTimeMillis();
-        System.out.println("Java sort: " + (t4 - t3) + " milliseconds");
+        // long t3 = System.currentTimeMillis();
+        // java.util.Arrays.sort(test2);
+        // long t4 = System.currentTimeMillis();
+        // System.out.println("Java sort: " + (t4 - t3) + " milliseconds");
 
     }
 }
