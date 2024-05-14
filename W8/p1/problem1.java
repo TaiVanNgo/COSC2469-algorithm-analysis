@@ -1,140 +1,154 @@
 package W8.p1;
 
-public class problem1 {
+import java.util.Random;
 
-    void mergeSort() {
+class problem1 {
+    static final int SIZE = (int) 1e6;
+    static final int SIZE_SMALL = 10;
+    static final int RANGE = (int) 1e4;
 
+    // use a small range (for example, 100) makes
+    // QuickSort/Lomuto partition raise a StackOverflow exception
+    // why?
+
+    public static int[] generate(boolean small) {
+        int size = SIZE;
+        if (small) {
+            size = SIZE_SMALL;
+        }
+        Random rnd = new Random();
+        int[] res = new int[size];
+        for (int i = 0; i < res.length; i++) {
+            res[i] = rnd.nextInt(RANGE);
+        }
+        return res;
     }
 
-    void quickSort() {
+    public static void print(int[] arr) {
+        StringBuilder sb = new StringBuilder("Array: ");
+        boolean first = true;
+        for (int n : arr) {
+            if (!first) {
+                sb.append(", " + n);
+            } else {
+                sb.append(n);
+                first = false;
+            }
+        }
+        System.out.println(sb);
+    }
 
+    public static void main(String[] args) {
+        // int[] arr = generate(true);
+        // System.out.println("Before Merge Sort: ");
+        // print(arr);
+        // new MergeSort().mergeSort(arr);
+        // System.out.println("After Merge Sort: ");
+        // print(arr);
+
+        int[] arr1 = new int[] { 3, 7, 8, 5, 4, 2, 6, 1 };
+        System.out.println("Before Lomuto Quick Sort: ");
+        print(arr1);
+        new QuickSortLomuto().quickSort(arr1, 0, arr1.length - 1);
+        System.out.println("After Lomuto Quick Sort: ");
+        print(arr1);
     }
 }
 
 class MergeSort {
-    public void mergeSort(int arr[]) {
+    void mergeSort(int[] arr) {
         if (arr.length > 1) {
-            int n = arr.length;
-            int middle = n / 2;
+            // first we divide the array into 2 sub arrays
+            int length = arr.length;
+            int middle = length / 2;
 
-            // create 2 sub-arrays from arr
-            int[] sub1 = new int[middle];
+            // we create 2 sub arrs;
+            int[] leftArr = new int[middle];
             for (int i = 0; i < middle; i++) {
-                sub1[i] = arr[i];
-            }
-            int[] sub2 = new int[n - middle];
-            for (int i = middle; i < n; i++) {
-                sub2[i - middle] = arr[i];
+                // copy value to the left arry
+                leftArr[i] = arr[i];
             }
 
-            // sort first and second halves
-            mergeSort(sub1);
-            mergeSort(sub2);
+            int[] rightArr = new int[length - middle];
+            for (int i = middle; i < length; i++) {
+                // copy value to the right arr;
+                rightArr[i - middle] = arr[i];
+            }
 
-            // merge sub1 and sub2 into the original array
-            merge(sub1, sub2, arr);
+            // then we call the merge sort to seperate it again and again
+            mergeSort(leftArr);// we divide the left array first
+            mergeSort(rightArr);// we divide the left array first
+
+            // then we merge it together
+            merge(leftArr, rightArr, arr);
         }
     }
 
-    // merge two sub-arrays sub1 and sub2 into the array dest
-    public void merge(int[] sub1, int[] sub2, int[] dest) {
-        int p1 = 0, p2 = 0, pDest = 0; // pointers to 3 arrays
-        while (p1 < sub1.length && p2 < sub2.length) {
-            if (sub1[p1] <= sub2[p2]) {
-                dest[pDest] = sub1[p1];
-                p1++;
+    void merge(int[] leftArr, int[] rightArr, int[] arr) {
+        int l = 0, r = 0, i = 0;
+        while (l < leftArr.length && r < rightArr.length) {
+            // prevent the left and right go out of the sub arrasy. "l" is the pointer for
+            // left sub arr, "r" is for right sub arr
+            // i for main arr
+            if (leftArr[l] < rightArr[r]) {
+                arr[i] = leftArr[l];
+                l++;
             } else {
-                dest[pDest] = sub2[p2];
-                p2++;
+                arr[i] = rightArr[r];
+                r++;
             }
-            pDest++;
+            i++;
         }
 
-        // copy remaining elements, if any
-        while (p1 < sub1.length) {
-            dest[pDest++] = sub1[p1++];
+        // at the end, it may be left or right still have number haven't copy yet, we
+        // copy it into the array since the 2 sub arrs is sorted already
+        while (l < leftArr.length) {
+            arr[i] = leftArr[l];
+            l++;
+            i++;
         }
-        while (p2 < sub2.length) {
-            dest[pDest++] = sub2[p2++];
+
+        while (r < rightArr.length) {
+            arr[i] = rightArr[r];
+            i++;
+            r++;
         }
     }
 }
 
 class QuickSortLomuto {
-    // sort with quick sort
-    public void quickSort(int arr[], int left, int right) {
+    void quickSort(int[] arr, int left, int right) {
+        // base case if the left exceed teh right
         if (left < right) {
-            try {
-                int p = partition(arr, left, right);
-                quickSort(arr, left, p - 1);
-                quickSort(arr, p + 1, right);
-            } catch (Exception e) {
-                e.printStackTrace();
-                System.exit(0);
-            }
+            int p = partition(arr, left, right);
+
+            quickSort(arr, left, p - 1);
+            quickSort(arr, p + 1, right);
         }
+        // find the partition
+
     }
 
-    // Lomuto partition
-    // Return a partition point p
-    // Where all elements arr[left, p - 1] <= arr[p] <= all elements arr[p + 1,
-    // right]
-    public int partition(int arr[], int left, int right) {
-        int p = arr[right]; // select the right-most element as pivot
-        int i = left;
+    int partition(int arr[], int left, int right) {
+        // we assume that the partion at the right
+        int p = arr[right];
+        int i = left; // i goes from left
+
         for (int j = left; j < right; j++) {
             if (arr[j] <= p) {
-                // swap
-                int tmp = arr[i];
+                // if we find the value that smaller than the partiion, we swap value of i and j
+                int temp = arr[i];
                 arr[i] = arr[j];
-                arr[j] = tmp;
-
-                // increase i
+                arr[j] = temp;
                 i++;
             }
         }
-        // swap
-        int tmp = arr[i];
-        arr[i] = arr[right];
-        arr[right] = tmp;
+
+        // after the loop, we swap the partition with the i
+        int temp = arr[i];
+        arr[i] = p;
+        arr[right] = temp;
 
         return i;
-
-    }
-}
-
-class QuickSortHoare {
-    // sort with quick sort
-    public void quickSort(int arr[], int left, int right) {
-        if (left < right) {
-            int p = partition(arr, left, right);
-            quickSort(arr, left, p);
-            quickSort(arr, p + 1, right);
-        }
-    }
-    // Hoare partition
-    // Return a partition point p
-    // Where all elements arr[left, p] <= all elements arr[p + 1, right]
-    public int partition(int arr[], int left, int right) {
-        int p = arr[left]; // select the left-most element as pivot
-        int front = left;
-        int back = right;
-        while (true) {
-            while (arr[front] < p) {
-                front++;
-            }
-            while (arr[back] > p) {
-                back--;
-            }
-            if (front >= back) {
-                return back;
-            }
-            // swapping
-            int t = arr[front];
-            arr[front] = arr[back];
-            arr[back] = t;
-            front++;
-            back--;
-        }
     }
 }
