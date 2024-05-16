@@ -3,9 +3,9 @@ package W3;
 // Singly Linked List-based implementation of queue
 public class LinkedListQueue<T> {
     // this class is used as a container of data
-    static class Node<T> {
+    public static class Node<T> {
         T data;
-        Node<T> next;
+        public Node<T> next;
 
         public Node(T data) {
             this.data = data;
@@ -14,7 +14,7 @@ public class LinkedListQueue<T> {
     }
 
     private int size;
-    private Node<T> head;
+    public Node<T> head;
 
     public LinkedListQueue() {
         size = 0;
