@@ -1,4 +1,4 @@
-package mocktest2;
+package mocktest2.self_solution;
 
 public class TaiSecretSearch {
 
