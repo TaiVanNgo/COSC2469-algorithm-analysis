@@ -1,0 +1,56 @@
+//The numbers in {} are the execution times of each statement
+
+maxOne = N                                              {1}
+maxTwo = N/2                                            {1}
+maxFive = N/5                                           {1}
+ALL = []                                                {1}
+for i = 0 to maxOne - 1                                 {N}
+  ALL.append(1)                                         {N}
+for i = 0 to maxTwo - 1                                 {N/2}
+  ALL.append(2)                                         {N/2}
+for i = 0 to maxFive - 1                                {N/5}
+  ALL.append(5)                                         {N/5}
+// the above code creates an array of
+// N number 1, N/2 number 2, and N/5 number 5
+answer = []                                                 {1}
+min = MAX_POSITIVE                                          {1}
+for each subset SUB of array ALL  // try all subsets        {2 ^ N}
+  if (sum of elements in SUB == N)  // a valid solution?                 {2 ^ N * N}
+    if (length of SUB < min)  // better than the current solution?       {2 ^ N * N}
+      min = length of SUB                                                {2 ^ N * N}    
+      answer = SUB                                                       {2 ^ N * N}
+return answer
+
+
+O(2^N * N);
+
+
+************** IMPROVEMENT **************
+# Greedy approach: constant time
+five = N / 5;
+remains = N % 5;
+if( remains > 0);
+    two = remains / 2
+    remains = N % 2
+    if(remains > 0)
+        one = remains / 1
+
+reuturn five + two + one;
+
+# Dynamic Programming approach
+coin[0] = 0
+for i from 1 to N
+    coint [i] = INFINITY
+
+for i from 1 to N
+    if(i >= 1)
+        coin[i] = min(coin[i], coin[i - 1] + 1)//pick one more coint whose value is 1
+    if(i >= 2)
+        coin[i] = min(coin[i], coin[i - 2] + 1)//pick one more coint whose value is 2
+    if(i >= 5)
+        coin[i] = min(coin[i], coin[i - 5] + 1)//pick one more coint whose value is 5
+//why only plus one, because although they have the different value but they are still count as 1 coin
+
+return coin[N]
+
+

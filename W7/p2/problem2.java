@@ -86,7 +86,7 @@ class Graph {
         }
 
         // if the node is not visited, set the node is visted
-        System.out.println("Visited: "  + this.label[index]);
+        System.out.println("Visited: " + this.label[index]);
         visited[index] = true;
         // we perform the visited
         for (int i = 0; i < this.size; i++) {
@@ -105,35 +105,35 @@ class Graph {
         }
     }
 
-    public void BFS(){
+    public void BFS() {
         System.out.println("Breadth-First Search/Traversal!");
         Boolean[] visited = new Boolean[this.size];
-        for(int i = 0; i < this.size; i++){
+        for (int i = 0; i < this.size; i++) {
             visited[i] = false;
         }
 
         ArrayQueue<Integer> queue = new ArrayQueue<>();
-        //create the queue
+        // create the queue
 
-        //import the first node. (assume the first node is 0(or "A"))
+        // import the first node. (assume the first node is 0(or "A"))
         visited[0] = true;
         queue.enQueue(0);
 
-        while(!queue.isEmpty()){
-            //run until the queue is empty
+        while (!queue.isEmpty()) {
+            // run until the queue is empty
 
-            //currentNOde is the node we are currently visiitng.
-            //pick from the queue, then dequeue it from the queue
+            // currentNOde is the node we are currently visiitng.
+            // pick from the queue, then dequeue it from the queue
             int currentNode = queue.peekFront();
             queue.deQueue();
             System.out.println("Visited: " + this.label[currentNode]);
 
-            for(int i = 0; i < this.size; i++){
-                if(this.graph[currentNode][i] == 1 && !visited[i]){
-                    //if the connection from the currentNode to the index i(go from 0 to size) is 1
-                    //it is connected
-                    //AND the node i havne't visited yet.
-                    //We put this unvisited node into the queue and continue the whileloop
+            for (int i = 0; i < this.size; i++) {
+                if (this.graph[currentNode][i] == 1 && !visited[i]) {
+                    // if the connection from the currentNode to the index i(go from 0 to size) is 1
+                    // it is connected
+                    // AND the node i havne't visited yet.
+                    // We put this unvisited node into the queue and continue the whileloop
                     queue.enQueue(i);
                     visited[i] = true;
                 }

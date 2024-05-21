@@ -1,8 +1,5 @@
 package W11.p1;
 
-import W3.ArrayStack;
-import W3.LinkedListQueue;
-
 public class problem1 {
     // [0, 3, 2, 0]
     // [3, 0, 0, 5],
@@ -53,10 +50,6 @@ public class problem1 {
                 }
             }
 
-            if (currentNode != -1) {
-                visited[currentNode] = true;
-            }
-
             // after determine the shortest node we use
             // we go through the map to calculate the distance to each neighbor through the
             // current shortest node
@@ -79,30 +72,25 @@ public class problem1 {
                 // if our current node is the destination. We print it
                 // first define the parent of the current node (current node in this if
                 // statement is the desitnation already)
-                ArrayStack<Integer> stack = new ArrayStack<>();
-                stack.push(currentNode);
-
-                int parentDestination = parent[currentNode];
-                stack.push(parentDestination);
-                // go up until the parent is null (I define null is -1)
-                while (parentDestination != -1) {
-                    parentDestination = parent[parentDestination];
-                    if (parentDestination != -1) {
-                        stack.push(parentDestination);
-                    }
+                String path = currentNode + "";
+                while(parent[currentNode] != -1){
+                    currentNode = parent[currentNode];
+                    
+                    //update 
+                    path = currentNode + " -> " + path;
                 }
 
-                while (!stack.isEmpty()) {
-                    if (stack.size() == 1) {
-                        System.out.println(stack.peek());
-                    } else {
-                        System.out.print(stack.peek() + " -> ");
-                    }
-                    stack.pop();
-                }
-
+                System.out.println(path);
+                System.out.println(distance[destination]);
                 return;
             }
+
+            if (shortest == Integer.MAX_VALUE) {
+                // we can not find the connection to go
+                return;
+            }
+            // update hte visited
+            visited[currentNode] = true;
         }
 
     }

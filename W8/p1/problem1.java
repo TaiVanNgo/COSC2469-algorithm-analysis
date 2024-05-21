@@ -46,7 +46,7 @@ class problem1 {
         // System.out.println("After Merge Sort: ");
         // print(arr);
 
-        int[] arr1 = new int[] { 3, 7, 8, 5, 4, 2, 6, 1 };
+        int[] arr1 = new int[] { 3, 7, 6, 4, 9, 8 };
         System.out.println("Before Lomuto Quick Sort: ");
         print(arr1);
         new QuickSortLomuto().quickSort(arr1, 0, arr1.length - 1);

@@ -60,7 +60,7 @@ public class TaiSecretSearch {
         // Find the point C that the agents A and B meet at the same time
 
         // time it take from A to C
-        double XC = 0;
+        double XC = this.XA;
 
         double max = this.XB;
         if (this.XB < 1) {

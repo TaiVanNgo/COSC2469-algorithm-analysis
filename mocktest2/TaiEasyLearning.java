@@ -1,7 +1,5 @@
 package mocktest2;
 
-import W3.LinkedListQueue;
-
 public class TaiEasyLearning {
     int[][] learningMap;
 
@@ -43,57 +41,70 @@ public class TaiEasyLearning {
     }
 
     int bestSequence() {
-        int size = this.learningMap.length;
-        boolean[] visited = new boolean[size];
-        int[] distance = new int[size];
-
-        for (int i = 0; i < size; i++) {
-            distance[i] = Integer.MAX_VALUE;// initially, the distance to all nodes are infinity
-        }
-        distance[0] = 0;// fisrt the first node is 0
-
         // 0 1 5
         // 4 0 3
         // 2 1 0
+        // ************* SET UP PHASE *************
+        int size = this.learningMap.length;
+        // define the cost table that store all the costof the courses
+        int[] costTable = new int[size];
 
-        int[] parent = new int[size];// keep track the parent
         for (int i = 0; i < size; i++) {
-            parent[i] = -1;// -1 means that they don't have parent
+            costTable[i] = Integer.MAX_VALUE;
         }
+        costTable[0] = 0;// we pick the first course as the first course we take
 
-        LinkedListQueue<Integer> queue = new LinkedListQueue<>();
+        boolean[] processed = new boolean[size];// keep track the processed courses
 
-        int shortest = Integer.MAX_VALUE;
-        int currentNode = -1;
+        int count = 0;// use to keep track the processed course
+        int totalCost = 0;// the result
+        // ************* MAIN PROGRAM *************
 
-        // we will determine the node that we start to process (the processed node willl
-        // be the node that have the smallest distance in the table distacne)
-        for (int i = 0; i < size; i++) {
-            if (visited[i]) {
-                continue;
-            }
+        while (count < size) {
+            // first find the course that has the minimum cost
+            int smallestCost = Integer.MAX_VALUE;
+            int currentCourse = -1;
 
-            if (distance[i] < shortest) {
-                shortest = distance[i];
-                currentNode = i;
-            }
-        }
-
-        if (currentNode != -1) {
-            visited[currentNode] = true;
-            queue.enQueue(currentNode);
-        }
-
-        while (!queue.isEmpty()) {
-            // find the shortest neighbour
             for (int i = 0; i < size; i++) {
-                if (this.learningMap[currentNode][i] > 0) {
-
+                if (processed[i]) {
+                    continue;
+                }
+                if (costTable[i] < smallestCost) {
+                    // if we can find the course that have cost < than the current smallets cost
+                    // update
+                    smallestCost = costTable[i];
+                    currentCourse = i;
                 }
             }
 
+            // after the for loop, we find the current course that we will process
+            if (count == size - 1) {
+                System.out.println(currentCourse);
+            } else {
+                System.out.print(currentCourse + "->");
+            }
+
+            processed[currentCourse] = true;
+            totalCost += costTable[currentCourse];// update the total cost
+            count++;
+
+            // find all the neighbors of the current course
+            for (int i = 0; i < size; i++) {
+                if (processed[i]) {
+                    continue;
+                }
+                if (this.learningMap[currentCourse][i] > 0) {// check if has the connection
+                    if (this.learningMap[currentCourse][i] < costTable[i]) {
+                        // update the costTable when find the better way to connect the course
+                        costTable[i] = this.learningMap[currentCourse][i];
+                    }
+                }
+            }
+            // after this loop, we updated all the neighbors of the current node
         }
 
+        // after the big while loop, we got the most optimized cost
+        return totalCost;
     }
 
     public static void main(String[] args) {
@@ -101,5 +112,8 @@ public class TaiEasyLearning {
                 new int[][] { { 0, 1, 5 }, { 4, 0, 3 }, { 2, 1, 0 } });
 
         System.out.println("compare: " + easyLearning.compare(new int[] { 0, 2 }, new int[] { 0, 1, 2 }));
+        //CÁI NÀY SAI RỒI, COI PHẦN SECOND_ATTEMPT
+        int res = easyLearning.bestSequence();
+        System.out.println("The total switching cost of the best learning sequence is: " + res);
     }
 }
