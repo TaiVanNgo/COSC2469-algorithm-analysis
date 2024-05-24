@@ -21,7 +21,6 @@ for each subset SUB of array ALL  // try all subsets        {2 ^ N}
       answer = SUB                                                       {2 ^ N * N}
 return answer
 
-
 O(2^N * N);
 
 

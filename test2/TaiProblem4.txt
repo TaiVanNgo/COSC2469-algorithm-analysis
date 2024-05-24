@@ -1,0 +1,47 @@
+int upperBound(Student[] Std, double searchGPA)
+    N = length(Std)                                     {1}
+    for i = 0 to (N - 1)                                {N}
+        if(Std[i].GPA > searchGPA) return i             {N}
+    return i                                            {1}
+
+Worse case of the above algorithm is N, if the searchGPA is more than the largest GPA of the array, it has to run through the array
+-> Time complexity: O(N)
+
+
+Convert the sorted array into a BST, as the array is already sorted, it is easily to convert 
+we may have the BST like 
+                            2.8
+                         /       \
+                       2.0            3.1
+                         \          /   \
+                         2.5      2.9    3.3
+
+when calling upperBound, if the search GPA is smaller than the current node, we go to the left subtree, and compare with the next current node
+for example: 
+if searchGPA = 1.0,
+1.0 < 2.8 -> go left,
+ 1.0 < 2.0 -> go left, but left of 2.0 is null, we return 2.0
+
+ if searchGPA is 2.9
+ 2.9 > 2.8 -> go right
+ 2.9 < 3.1 -> go left, 
+ 2.9 == 2.9 -> return the 3.1, 
+
+pseudo code
+upperBound(BinaryNode node, searchGPA){
+    if node is null; return null
+
+    if node.data == searchGPA return node's parent;
+
+    if searchGPA > node.data
+        upperBound(node.right, searchGPA)
+
+    else if searchGPA < node.data
+        upperBound(node.left, searchGPA)
+    
+    return node;
+}
+
+The time complexity of this approach is O(logN)
+
+this approach will return the value of GPA, we can convert the GPA value into the index of the array by using binary search in the array. -> O(LogN)
